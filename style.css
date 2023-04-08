@@ -45,7 +45,7 @@ body {
 .cards .card {
   cursor: pointer;
   position: relative;
-  perspective: 1000px;
+  perspective: 800px;
   /* backface-visibility: visible; */
   transform-style:preserve-3d;
   height: calc(100% / 4 - 10px);
@@ -79,13 +79,13 @@ body {
  
 }
 
-/* .card:hover .front-view {
+.card:hover .front-view {
    transform: rotateY(180deg);
 }
 
 
 .card:hover .back-view {
    transform: rotateY(0);
-} */
+}
 
 
