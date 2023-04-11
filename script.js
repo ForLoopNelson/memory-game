@@ -18,7 +18,7 @@ function flipCard({target: clickedCard}) {
 function matchCards(img1, img2) {
     if(img1 === img2) {
         matched++;
-        if(matched == 8) {
+        if(matched == 6) {
             setTimeout(() => {
                 return shuffleCard();
             }, 1000);
@@ -43,12 +43,12 @@ function shuffleCard() {
     matched = 0;
     disableDeck = false;
     cardOne = cardTwo = "";
-    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8];
+    let arr = ['yui','azusa','mio','ritsu','tsumugi','sawako','yui','azusa','mio','ritsu','tsumugi','sawako'];
     arr.sort(() => Math.random() > 0.5 ? 1 : -1);
     cards.forEach((card, i) => {
         card.classList.remove("flip");
         let imgTag = card.querySelector(".back-view img");
-        imgTag.src = `/img/${arr[i]}.png`;
+        imgTag.src = `img/${arr[i]}.png`;
         card.addEventListener("click", flipCard);
     });
 }
