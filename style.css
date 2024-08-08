@@ -31,6 +31,20 @@ body {
   background: #6563ff;
 }
 
+.score-panel {
+  margin-bottom: 540px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1; /* Ensure it's above the cards */
+}
+
 /* .wrapper {
   height: 400px;
   width: 400px;
