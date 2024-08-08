@@ -1,59 +1,121 @@
 const cards = document.querySelectorAll(".card");
 let matched = 0;
+let moveCounter = 0;
+let numStars = 3;
+let maxMoves = 10; // Maximum number of moves allowed
+let timer = {
+  seconds: 0,
+  minutes: 0,
+  clearTime: -1
+};
 let cardOne, cardTwo;
 let disableDeck = false;
-function flipCard({target: clickedCard}) {
-    if(cardOne !== clickedCard && !disableDeck) {
-        clickedCard.classList.add("flip");
-        if(!cardOne) {
-            return cardOne = clickedCard;
-        }
-        cardTwo = clickedCard;
-        disableDeck = true;
-        let cardOneImg = cardOne.querySelector(".back-view img").src,
-        cardTwoImg = cardTwo.querySelector(".back-view img").src;
-        matchCards(cardOneImg, cardTwoImg);
+
+// Start timer function
+function startTimer() {
+  timer.clearTime = setInterval(() => {
+    if (timer.seconds === 59) {
+      timer.minutes++;
+      timer.seconds = 0;
+    } else {
+      timer.seconds++;
     }
+
+    // Ensure that single digit seconds are preceded with a 0
+    let formattedSec = timer.seconds < 10 ? "0" + timer.seconds : timer.seconds;
+    let time = `${timer.minutes}:${formattedSec}`;
+    document.querySelector(".timer").textContent = time;
+  }, 1000);
 }
-function matchCards(img1, img2) {
-    if(img1 === img2) {
-        matched++;
-        if(matched == 6) {
-            setTimeout(() => {
-                return shuffleCard();
-            }, 1000);
-        }
-        cardOne.removeEventListener("click", flipCard);
-        cardTwo.removeEventListener("click", flipCard);
-        cardOne = cardTwo = "";
-        return disableDeck = false;
+
+// Resets timer state and restarts timer
+function resetTimer() {
+  clearInterval(timer.clearTime);
+  timer.seconds = 0;
+  timer.minutes = 0;
+  document.querySelector(".timer").textContent = "0:00";
+
+  startTimer();
+}
+
+// Update moves counter and check if game is over
+function updateMoves() {
+  moveCounter++;
+  document.querySelector(".moves").textContent = moveCounter;
+
+  if (moveCounter >= maxMoves) {
+    alert("You've reached the maximum number of moves!");
+    resetGame();
+  }
+}
+
+// Reset the game (shuffling cards, resetting timer and moves)
+function resetGame() {
+  resetTimer();
+  moveCounter = 0;
+  document.querySelector(".moves").textContent = moveCounter;
+  shuffleCard();
+}
+
+function flipCard({ target: clickedCard }) {
+  if (cardOne !== clickedCard && !disableDeck) {
+    clickedCard.classList.add("flip");
+    if (!cardOne) {
+      cardOne = clickedCard;
+      return;
     }
+    cardTwo = clickedCard;
+    disableDeck = true;
+    let cardOneImg = cardOne.querySelector(".back-view img").src,
+      cardTwoImg = cardTwo.querySelector(".back-view img").src;
+    matchCards(cardOneImg, cardTwoImg);
+    updateMoves(); // Increment move counter after each pair is checked
+  }
+}
+
+function matchCards(img1, img2) {
+  if (img1 === img2) {
+    matched++;
+    if (matched == 6) {
+      setTimeout(() => {
+        alert("You won!");
+        resetGame();
+      }, 500);
+    }
+    cardOne.removeEventListener("click", flipCard);
+    cardTwo.removeEventListener("click", flipCard);
+    cardOne = cardTwo = "";
+    disableDeck = false;
+  } else {
     setTimeout(() => {
-        cardOne.classList.add("shake");
-        cardTwo.classList.add("shake");
+      cardOne.classList.add("shake");
+      cardTwo.classList.add("shake");
     }, 400);
     setTimeout(() => {
-        cardOne.classList.remove("shake", "flip");
-        cardTwo.classList.remove("shake", "flip");
-        cardOne = cardTwo = "";
-        disableDeck = false;
+      cardOne.classList.remove("shake", "flip");
+      cardTwo.classList.remove("shake", "flip");
+      cardOne = cardTwo = "";
+      disableDeck = false;
     }, 1200);
+  }
 }
+
 function shuffleCard() {
-    matched = 0;
-    disableDeck = false;
-    cardOne = cardTwo = "";
-    let arr = ['yui','azusa','mio','ritsu','tsumugi','sawako','yui','azusa','mio','ritsu','tsumugi','sawako'];
-    arr.sort(() => Math.random() > 0.5 ? 1 : -1);
-    cards.forEach((card, i) => {
-        card.classList.remove("flip");
-        let imgTag = card.querySelector(".back-view img");
-        imgTag.src = `img/${arr[i]}.png`;
-        card.addEventListener("click", flipCard);
-    });
-}
-shuffleCard();
-    
-cards.forEach(card => {
+  matched = 0;
+  disableDeck = false;
+  cardOne = cardTwo = "";
+  let arr = ['yui', 'azusa', 'mio', 'ritsu', 'tsumugi', 'sawako', 'yui', 'azusa', 'mio', 'ritsu', 'tsumugi', 'sawako'];
+  arr.sort(() => Math.random() > 0.5 ? 1 : -1);
+  cards.forEach((card, i) => {
+    card.classList.remove("flip");
+    let imgTag = card.querySelector(".back-view img");
+    imgTag.src = `img/${arr[i]}.png`;
     card.addEventListener("click", flipCard);
+  });
+}
+
+// Start the game
+resetGame();
+cards.forEach(card => {
+  card.addEventListener("click", flipCard);
 });
