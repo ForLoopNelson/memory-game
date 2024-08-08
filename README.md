@@ -5,6 +5,6 @@
 ## Match the tiles with the Characters from K-On!
 
 ### Tasks:
--[ ] Fix mobile design
--[ ] get counter timer to start when you click first tile
--[ ] fix counter design. make it pretty.
+-- Fix mobile design
+-- get counter timer to start when you click first tile
+-- fix counter design. make it pretty.
