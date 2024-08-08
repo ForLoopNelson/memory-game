@@ -1,4 +1,4 @@
-<img src="./img/logo.png" width="200" height="200" border="10"/>
+<img src="./img/logo.png" width="250" height="200" border="10"/>
 
 # K-On! Anime memory card game
 
