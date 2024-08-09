@@ -7,6 +7,4 @@
 ### Tasks:
 -- Fix mobile design
 
--- get counter timer to start when you click first tile
-
--- fix counter design. make it pretty.
+-- Set logic to show best previous time finish
