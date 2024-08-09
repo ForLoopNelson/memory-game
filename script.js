@@ -6,7 +6,8 @@ let maxMoves = 10; // Maximum number of moves allowed
 let timer = {
   seconds: 0,
   minutes: 0,
-  clearTime: -1
+  clearTime: -1,
+  isRunning: false
 };
 let cardOne, cardTwo;
 let disableDeck = false;
@@ -33,9 +34,10 @@ function resetTimer() {
   clearInterval(timer.clearTime);
   timer.seconds = 0;
   timer.minutes = 0;
+  timer.isRunning = false;
   document.querySelector(".timer").textContent = "0:00";
 
-  startTimer();
+ 
 }
 
 // Update moves counter and check if game is over
@@ -58,6 +60,11 @@ function resetGame() {
 }
 
 function flipCard({ target: clickedCard }) {
+   if (!timer.isRunning) {
+    startTimer();
+    timer.isRunning = true;
+  }
+
   if (cardOne !== clickedCard && !disableDeck) {
     clickedCard.classList.add("flip");
     if (!cardOne) {
@@ -118,4 +125,7 @@ function shuffleCard() {
 resetGame();
 cards.forEach(card => {
   card.addEventListener("click", flipCard);
+});
+document.querySelector(".restart").addEventListener("click", () => {
+  resetGame();
 });
