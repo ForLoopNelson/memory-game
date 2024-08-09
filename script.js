@@ -2,7 +2,7 @@ const cards = document.querySelectorAll(".card");
 let matched = 0;
 let moveCounter = 0;
 let numStars = 3;
-let maxMoves = 10; // Maximum number of moves allowed
+let maxMoves = 18; // Maximum number of moves allowed
 let timer = {
   seconds: 0,
   minutes: 0,
