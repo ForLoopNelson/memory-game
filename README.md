@@ -7,5 +7,7 @@
 ### Tasks:
 -- Fix mobile design
 
+-- Change card color on hover
+
 -- Set logic to show best previous time finish
 
